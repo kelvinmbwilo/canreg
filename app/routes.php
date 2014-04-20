@@ -157,3 +157,20 @@ Route::post('report/pie',array('uses'=>'ReportController@makePie'));
 
 //get a jason value of data
 Route::post('getjason/{id}',array('uses'=>'ReportController@show'));
+
+
+/**
+ * Dashboard Settings
+ * Using DashboardController
+ */
+//viewing The index Page
+Route::get('settings/dashboard',array('uses'=>'DashboardController@index'));
+
+//Changing The Title
+Route::post('dashboard/title',array('uses'=>'DashboardController@setTitle'));
+
+//Changing The Title
+Route::post('dashboard/welcome_note',array('uses'=>'DashboardController@setWelcome'));
+
+//Changing The Title
+Route::post('dashboard/chat',array('uses'=>'DashboardController@setChat'));

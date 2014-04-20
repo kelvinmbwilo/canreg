@@ -24,6 +24,7 @@
     <schema name="" catalog="road"/>
     <schema name="" catalog="test"/>
     <schema name="" catalog="testt"/>
+    <schema name="" catalog="udchat"/>
     <table name="category" schema="" catalog="CCBC" type="TABLE">
       <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
@@ -1175,6 +1176,16 @@
       <column name="updated_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
+    <table name="dashboard" schema="" catalog="canreg" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
+      <column name="welcome_note" sqlType="VARCHAR" length="2500" precision="0" nullable="false" jdbcType="12"/>
+      <column name="logo" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
+      <column name="report" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
+      <column name="created_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
     <table name="diagnosis" schema="" catalog="canreg" type="TABLE">
       <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="patient_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
@@ -1220,6 +1231,7 @@
     <table name="hiv_status" schema="" catalog="canreg" type="TABLE">
       <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="patient_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="tumor_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
       <column name="status" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
       <column name="year_of_last_test" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
       <column name="years_since_first_diagnosis" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
@@ -3301,6 +3313,200 @@
       <primary-key name="PRIMARY" columns="ID"/>
       <index name="user_login_key" unique="false" columns="user_login"/>
       <index name="user_nicename" unique="false" columns="user_nicename"/>
+    </table>
+    <table name="debate_suggestion_comment_likes" schema="" catalog="udchat" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="comment_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="liked_by_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="time_liked" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="status" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="created_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="debate_suggestion_comment_likes_comment_id_foreign" columns="comment_id" ref-table="debate_suggestion_comments" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="debate_suggestion_comment_likes_liked_by_id_foreign" columns="liked_by_id" ref-table="users" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="liked_by_id" unique="true" columns="comment_id"/>
+    </table>
+    <table name="debate_suggestion_comments" schema="" catalog="udchat" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="suggestion_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="commented_by_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="commentType" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6"/>
+      <column name="comment_content" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
+      <column name="comment_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="status" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="created_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="debate_suggestion_comments_suggestion_id_foreign" columns="suggestion_id" ref-table="debate_suggestions" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="debate_suggestion_comments_commented_by_id_foreign" columns="commented_by_id" ref-table="users" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <exported-key name="debate_suggestion_comment_likes_comment_id_foreign" table="debate_suggestion_comment_likes" schema="" catalog="udchat" columns="comment_id"/>
+      <exported-key name="pont_of_additions_comment_id_foreign" table="pont_of_additions" schema="" catalog="udchat" columns="comment_id"/>
+    </table>
+    <table name="debate_suggestion_votes" schema="" catalog="udchat" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="suggestion_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="voted_by_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="vote_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="status" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="created_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="debate_suggestion_votes_suggestion_id_foreign" columns="suggestion_id" ref-table="debate_suggestions" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="debate_suggestion_votes_voted_by_id_foreign" columns="voted_by_id" ref-table="users" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="voted_by_id" unique="true" columns="suggestion_id"/>
+    </table>
+    <table name="debate_suggestions" schema="" catalog="udchat" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="suggested_by_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="suggestion_content" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
+      <column name="suggestion_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="status" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="created_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="debate_suggestions_suggested_by_id_foreign" columns="suggested_by_id" ref-table="users" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <exported-key name="debate_suggestion_comments_suggestion_id_foreign" table="debate_suggestion_comments" schema="" catalog="udchat" columns="suggestion_id"/>
+      <exported-key name="debate_suggestion_votes_suggestion_id_foreign" table="debate_suggestion_votes" schema="" catalog="udchat" columns="suggestion_id"/>
+    </table>
+    <table name="forum_suggestion_comment_likes" schema="" catalog="udchat" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="comment_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="liked_by_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="time_liked" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="status" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="created_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="forum_suggestion_comment_likes_comment_id_foreign" columns="comment_id" ref-table="forum_suggestion_comments" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="forum_suggestion_comment_likes_liked_by_id_foreign" columns="liked_by_id" ref-table="users" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="liked_by_id" unique="true" columns="comment_id"/>
+    </table>
+    <table name="forum_suggestion_comments" schema="" catalog="udchat" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="suggestion_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="commented_by_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="comment_content" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
+      <column name="comment_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="status" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="created_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="forum_suggestion_comments_suggestion_id_foreign" columns="suggestion_id" ref-table="forum_suggestions" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="forum_suggestion_comments_commented_by_id_foreign" columns="commented_by_id" ref-table="users" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <exported-key name="forum_suggestion_comment_likes_comment_id_foreign" table="forum_suggestion_comment_likes" schema="" catalog="udchat" columns="comment_id"/>
+    </table>
+    <table name="forum_suggestion_votes" schema="" catalog="udchat" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="suggestion_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="voted_by_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="vote_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="status" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="created_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="forum_suggestion_votes_suggestion_id_foreign" columns="suggestion_id" ref-table="forum_suggestions" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="forum_suggestion_votes_voted_by_id_foreign" columns="voted_by_id" ref-table="users" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="voted_by_id" unique="true" columns="suggestion_id"/>
+    </table>
+    <table name="forum_suggestions" schema="" catalog="udchat" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="suggested_by_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="suggestion_content" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
+      <column name="suggestion_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="suggestion_category" sqlType="VARCHAR" length="20" precision="0" nullable="false" jdbcType="12"/>
+      <column name="status" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="created_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="forum_suggestions_suggested_by_id_foreign" columns="suggested_by_id" ref-table="users" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <exported-key name="forum_suggestion_comments_suggestion_id_foreign" table="forum_suggestion_comments" schema="" catalog="udchat" columns="suggestion_id"/>
+      <exported-key name="forum_suggestion_votes_suggestion_id_foreign" table="forum_suggestion_votes" schema="" catalog="udchat" columns="suggestion_id"/>
+    </table>
+    <table name="friends" schema="" catalog="udchat" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="request_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="accept_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="status" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="date_requested" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="date_accepted" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="created_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="friends_accept_id_foreign" columns="accept_id" ref-table="users" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="friends_request_id_foreign" columns="request_id" ref-table="users" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+    </table>
+    <table name="messages" schema="" catalog="udchat" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="sender_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="receiver_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="message_content" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
+      <column name="date_sent" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="date_read" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="status" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="created_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="messages_receiver_id_foreign" columns="receiver_id" ref-table="users" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="messages_sender_id_foreign" columns="sender_id" ref-table="users" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+    </table>
+    <table name="migrations" schema="" catalog="udchat" type="TABLE">
+      <column name="migration" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
+      <column name="batch" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+    </table>
+    <table name="point_of_addition_likes" schema="" catalog="udchat" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="ad_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="liked_by_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="time_liked" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="status" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="created_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="point_of_addition_likes_liked_by_id_foreign" columns="liked_by_id" ref-table="users" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="liked_by_id" unique="true" columns="ad_id"/>
+    </table>
+    <table name="pont_of_additions" schema="" catalog="udchat" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="comment_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="ad_by_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="ad_content" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
+      <column name="ad_time" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="status" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="pont_of_additions_comment_id_foreign" columns="comment_id" ref-table="debate_suggestion_comments" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="pont_of_additions_ad_by_id_foreign" columns="ad_by_id" ref-table="users" ref-schema="" ref-catalog="udchat" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+    </table>
+    <table name="users" schema="" catalog="udchat" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="first_name" sqlType="VARCHAR" length="40" precision="0" nullable="false" jdbcType="12"/>
+      <column name="sir_name" sqlType="VARCHAR" length="40" precision="0" nullable="false" jdbcType="12"/>
+      <column name="nick_name" sqlType="VARCHAR" length="20" precision="0" nullable="false" jdbcType="12"/>
+      <column name="gender" sqlType="VARCHAR" length="6" precision="0" nullable="false" jdbcType="12"/>
+      <column name="status" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MQ=="/>
+      <column name="bio" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="first_login" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="login" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="logout" sqlType="TIMESTAMP" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="remember_token" sqlType="VARCHAR" length="100" precision="0" nullable="false" jdbcType="12"/>
+      <column name="created_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="debate_suggestion_comment_likes_liked_by_id_foreign" table="debate_suggestion_comment_likes" schema="" catalog="udchat" columns="liked_by_id"/>
+      <exported-key name="debate_suggestion_comments_commented_by_id_foreign" table="debate_suggestion_comments" schema="" catalog="udchat" columns="commented_by_id"/>
+      <exported-key name="debate_suggestion_votes_voted_by_id_foreign" table="debate_suggestion_votes" schema="" catalog="udchat" columns="voted_by_id"/>
+      <exported-key name="debate_suggestions_suggested_by_id_foreign" table="debate_suggestions" schema="" catalog="udchat" columns="suggested_by_id"/>
+      <exported-key name="forum_suggestion_comment_likes_liked_by_id_foreign" table="forum_suggestion_comment_likes" schema="" catalog="udchat" columns="liked_by_id"/>
+      <exported-key name="forum_suggestion_comments_commented_by_id_foreign" table="forum_suggestion_comments" schema="" catalog="udchat" columns="commented_by_id"/>
+      <exported-key name="forum_suggestion_votes_voted_by_id_foreign" table="forum_suggestion_votes" schema="" catalog="udchat" columns="voted_by_id"/>
+      <exported-key name="forum_suggestions_suggested_by_id_foreign" table="forum_suggestions" schema="" catalog="udchat" columns="suggested_by_id"/>
+      <exported-key name="friends_accept_id_foreign" table="friends" schema="" catalog="udchat" columns="accept_id"/>
+      <exported-key name="friends_request_id_foreign" table="friends" schema="" catalog="udchat" columns="request_id"/>
+      <exported-key name="messages_receiver_id_foreign" table="messages" schema="" catalog="udchat" columns="receiver_id"/>
+      <exported-key name="messages_sender_id_foreign" table="messages" schema="" catalog="udchat" columns="sender_id"/>
+      <exported-key name="point_of_addition_likes_liked_by_id_foreign" table="point_of_addition_likes" schema="" catalog="udchat" columns="liked_by_id"/>
+      <exported-key name="pont_of_additions_ad_by_id_foreign" table="pont_of_additions" schema="" catalog="udchat" columns="ad_by_id"/>
+      <index name="users_nick_name_unique" unique="true" columns="nick_name"/>
     </table>
   </data-source>
 </component>
