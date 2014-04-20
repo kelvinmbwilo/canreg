@@ -36,7 +36,7 @@
         }
     </style>
 </head>
-<body class="bootstrap-admin-with-small-navbar">
+<body class="bootstrap-admin-with-small-navbar" style="background-image: url({{ asset('img/body-bg.png')}})">
 <!-- small navbar -->
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 20px">
     <div class="container">
