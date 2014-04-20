@@ -42,7 +42,7 @@
     <div class="container">
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left bootstrap-admin-theme-change-size">
-                <li><h3><a href="#">Population Cancer Registry (CANREG)</a></h3> </li>
+                <li><h3><a href="#">{{ Dashboard::first()->title }}</a></h3> </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -126,7 +126,7 @@
     <div class="container">
         <div class="row">
             <footer role="contentinfo">
-                <p class="left">Population Cancer Registry (CANREG)</p>
+                <p class="left">{{ Dashboard::first()->title }}</p>
                 <p class="right">&copy; {{ date("Y") }}<a href="#" target="_blank"> Softmed LTD</a></p>
             </footer>
         </div>
